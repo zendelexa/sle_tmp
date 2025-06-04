@@ -6,7 +6,7 @@ N = 5
 M = 10
 
 
-def calc(alpha, beta, gamma=-0.5):
+def calc(alpha, beta, gamma=0):
     A = [[0 for j in range(N)] for i in range(N)]
     for i in range(N):
         A[i][i] = alpha
@@ -16,7 +16,7 @@ def calc(alpha, beta, gamma=-0.5):
             A[i][i + 1] = beta
     A = np.array(A)
     # print("DET:", np.linalg.det(A@A))
-    print("VAL:", np.linalg.det(A@A) / (beta ** N))
+    # print("VAL:", np.linalg.det(A) / (beta ** N))
 
     B = [[0 for j in range(N)] for i in range(N)]
     for i in range(N):
@@ -26,15 +26,20 @@ def calc(alpha, beta, gamma=-0.5):
         if i < N - 1:
             B[i][i + 1] = gamma
     B = np.array(B)
-    print(B)
+    # print(B)
     invB = np.linalg.inv(B)
-    print(invB)
+    # print(invB)
+
+    # print("aaa:", np.linalg.det(A @ A - 4 * B @ B))
+    print("VAL 2:", (np.linalg.det(A) + (abs(np.linalg.det(A @ A - 4 * B @ B))) ** 0.5) / (2 * beta ** N))
+    # print("VAL 3:",
+    #       (np.linalg.det(A) + (abs(np.linalg.det(A @ A)) + abs(np.linalg.det(4 * B @ B))) ** 0.5) / (2 * beta ** N))
 
     x = np.array([1 for i in range(N)])
 
     xi = x
     print(0, xi)
-    for step in range(1):
+    for step in range(10):
         xp = np.zeros(N)
         # xp = np.array([1 for _ in range(N)])
         for i in range(1, M):
@@ -50,7 +55,13 @@ def calc_norm(beta, gamma):
 
 
 # print(calc(13, -10, gamma=8))  # При N = 5
-print(calc(1, 1.1, gamma=0))
+# print(calc(1, 4.5, gamma=0))
+# print(calc(1, 4.5, gamma=0))
+#
+# for i in np.linspace(1.1, 10, 100):
+#     print(i, end=":\t")
+#     calc(1, i)
+print(calc(1, 3.71))
 
 # print(20**0.5)
 #
